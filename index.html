@@ -1399,15 +1399,6 @@ body.dark-theme .toggle-password:hover {
     justify-content: center;
 }
 
-.hero-video {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    z-index: 0;
-}
 
 .hero-overlay {
     position: absolute;
@@ -2835,6 +2826,33 @@ h2 svg, h3 svg {
     transform: translateX(2px);
 }
 
+/* Видео фон */
+.hero-video {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: 0;
+}
+
+/* Затемнение для читаемости текста */
+.hero-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, rgba(15,23,42,0.75), rgba(26,86,219,0.7));
+    z-index: 1;
+}
+
+.hero-content {
+    position: relative;
+    z-index: 2;
+}
+
 @keyframes wiggle {
     0%, 100% { transform: rotate(0deg) scale(1); }
     25% { transform: rotate(-8deg) scale(1.1); }
@@ -2912,6 +2930,33 @@ body.dark-theme .sidebar-item.active svg {
 .clickable-transaction:active {
     transform: scale(0.99);
 }
+
+/* Иконки для feature карточек */
+.feature-icon svg {
+    width: 48px;
+    height: 48px;
+    transition: transform 0.3s ease;
+}
+
+.feature-card:hover .feature-icon svg {
+    transform: scale(1.1);
+}
+
+/* Иконки в поддержке */
+.support-contact-compact .contact-icon svg {
+    width: 20px;
+    height: 20px;
+    stroke: var(--accent);
+}
+
+/* Иконка безопасности */
+.security-icon svg {
+    width: 18px;
+    height: 18px;
+    vertical-align: middle;
+}
+
+
 
 }
 
@@ -3003,48 +3048,57 @@ body.dark-theme .sidebar-item.active svg {
 </div>
     
     <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 40px;">
-        <!-- Карточка 1 с фото -->
-        <div class="feature-card">
-    <div class="feature-image">
-        <img src="images/security.jpg" alt="Secure banking" alt="Secure banking" style="width:100%; height:200px; object-fit:cover;">
-    </div>
-    <div class="feature-content">
-        <div class="feature-icon">
-            <img src="icons/lock.png" alt="Secure banking" style="width:10%; height: 60px; object-fit:cover;">
+    <!-- Карточка 1 -->
+    <div class="feature-card">
+        <div class="feature-image">
+            <img src="https://images.pexels.com/photos/4050312/pexels-photo-4050312.jpeg?auto=compress&cs=tinysrgb&w=600" alt="Secure banking" style="width:100%; height:200px; object-fit:cover;">
         </div>
-        <h3 data-i18n="feature1_title">Secure Verification</h3>
-        <p data-i18n="feature1_desc">Bank-grade encryption for your documents with AES-256 security.</p>
+        <div class="feature-content">
+            <div class="feature-icon">
+                <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#4f72e8" stroke-width="1.5">
+                    <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                    <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+                </svg>
+            </div>
+            <h3 data-i18n="feature1_title">Secure Verification</h3>
+            <p data-i18n="feature1_desc">Bank-grade encryption for your documents with AES-256 security.</p>
+        </div>
+    </div>
+    
+    <!-- Карточка 2 -->
+    <div class="feature-card">
+        <div class="feature-image">
+            <img src="https://images.pexels.com/photos/4050315/pexels-photo-4050315.jpeg?auto=compress&cs=tinysrgb&w=600" alt="Fast KYC" style="width:100%; height:200px; object-fit:cover;">
+        </div>
+        <div class="feature-content">
+            <div class="feature-icon">
+                <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#4f72e8" stroke-width="1.5">
+                    <circle cx="12" cy="12" r="10"></circle>
+                    <polyline points="12 6 12 12 16 14"></polyline>
+                </svg>
+            </div>
+            <h3 data-i18n="feature2_title">Fast KYC</h3>
+            <p data-i18n="feature2_desc">Document verification within 24 hours with automated AI assistance.</p>
+        </div>
+    </div>
+    
+    <!-- Карточка 3 -->
+    <div class="feature-card">
+        <div class="feature-image">
+            <img src="https://images.pexels.com/photos/210607/pexels-photo-210607.jpeg?auto=compress&cs=tinysrgb&w=600" alt="EU Bank" style="width:100%; height:200px; object-fit:cover;">
+        </div>
+        <div class="feature-content">
+            <div class="feature-icon">
+                <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#4f72e8" stroke-width="1.5">
+                    <circle cx="12" cy="12" r="10"></circle>
+                    <path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"></path>
+                </svg>
+            </div>
+            <h3 data-i18n="feature3_title">EU Compliant</h3>
+            <p data-i18n="feature3_desc">Fully compliant with PSD2 and EU banking regulations.</p>
+        </div>
     </div>
 </div>
-        
-        <!-- Карточка 2 с фото -->
-        <div class="feature-card">
-    <div class="feature-image">
-        <img src="https://images.pexels.com/photos/4050315/pexels-photo-4050315.jpeg?auto=compress&cs=tinysrgb&w=600" alt="Fast KYC" style="width:100%; height:200px; object-fit:cover;">
-    </div>
-    <div class="feature-content">
-        <div class="feature-icon">
-            <img src="icons/support.png" alt="Fast support" style="width:10%; height:50px; object-fit:cover;">
-        </div>
-        <h3 data-i18n="feature2_title">Fast KYC</h3>
-        <p data-i18n="feature2_desc">Document verification within 24 hours with automated AI assistance.</p>
-    </div>
-</div>
-        
-        <!-- Карточка 3 с фото -->
-        <div class="feature-card">
-    <div class="feature-image">
-        <img src="images/eu.jpg" alt="EU Bank" style="width:100%; height:200px; object-fit:cover;">
-    </div>
-    <div class="feature-content">
-        <div class="feature-icon">
-            <img src="icons/eu bank.png" alt="EU Bank" style="width:10%; height:50px; object-fit:cover;">
-        </div>
-        <h3 data-i18n="feature3_title">EU Compliant</h3>
-        <p data-i18n="feature3_desc">Fully compliant with PSD2 and EU banking regulations.</p>
-    </div>
-</div>
-    </div>
 </div>
 
 <div class="currency-converter-compact">
@@ -3154,7 +3208,12 @@ body.dark-theme .sidebar-item.active svg {
             </div>
             <div style="margin-top: 16px; padding: 12px; background: #f3f4f6; border-radius: 12px; font-size: 11px; color: #6b7280;">
     <strong>
-        <img src="icons/shield-lock.svg" alt="My Icon" style="width: 18px; height: 18px;">Security notice</strong><br>
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="display: inline; vertical-align: middle; margin-right: 4px;">
+            <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+            <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+        </svg>
+        Security notice
+    </strong><br>
     Never share your password with anyone. Our staff will never ask for it.
 </div>
         </div>
