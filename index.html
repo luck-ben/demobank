@@ -2935,8 +2935,6 @@ body.dark-theme .sidebar-item.active svg {
     </div>
     
     <div class="hero">
-    <!-- Видео фон -->
-    
     <div class="hero-overlay"></div>
     <div class="hero-content">
         <h1 data-i18n="hero_title">Banking made simple.<br>Built for Europe.</h1>
@@ -3219,7 +3217,7 @@ body.dark-theme .sidebar-item.active svg {
                      <label data-i18n="password_label">Password</label>
                      <div class="password-wrapper">
                      <input type="password" id="reg-password" placeholder="min. 8 characters">
-                  <button type="button" class="toggle-password eye-closed" data-action="togglePassword" data-target="reg-password"></button>
+                  <button type="button" class="toggle-password eye-closed" data-password-id="reg-password"></button>
                      </div>
                 </div>
                 <div class="form-group">
@@ -4372,8 +4370,8 @@ startCounters() {
     counters.forEach(counter => observer.observe(counter));
 },
 
+
 // Показать/скрыть пароль
-// Показать/скрыть пароль с PNG иконками
 togglePassword(inputId, buttonElement) {
     const input = document.getElementById(inputId);
     if (!input) return;
@@ -4772,12 +4770,16 @@ handleLangChange(e) {
 
 // Обработчик показа пароля
 handleTogglePassword(e) {
+    e.preventDefault();
+    e.stopPropagation();
     const btn = e.currentTarget;
-    const inputId = btn.getAttribute('data-password-id');
-    if (inputId) {
-        this.togglePassword(inputId, btn);
+    const targetId = btn.getAttribute('data-target');
+    
+    if (targetId) {
+        // Если есть атрибут data-target (используется в вашем HTML)
+        this.togglePassword(targetId, btn);
     } else {
-        // Если нет data-password-id, ищем ближайший input
+        // Альтернативный способ: ищем ближайший input
         const wrapper = btn.closest('.password-wrapper');
         const input = wrapper ? wrapper.querySelector('input') : null;
         if (input) {
@@ -4785,7 +4787,6 @@ handleTogglePassword(e) {
         }
     }
 },
-
 // Обработчик swap валют
 handleSwap(e) {
     const btn = e.currentTarget;
