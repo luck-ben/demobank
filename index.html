@@ -2132,7 +2132,7 @@ body.dark-theme .toggle-password:hover {
     
     .table-container { border-radius: 12px; }
     th, td { padding: 8px 10px; font-size: 11px; }
-    td small { max-width: 70px; display: block; overflow: hidden; text-overflow: ellipsis; }
+    td small { max-width: 250px; display: inline-block; white-space: normal; word-wrap: break-word; }
     
     .sidebar-item { padding: 10px 14px; font-size: 13px; }
     .sidebar-item svg { width: 18px; height: 18px; }
@@ -3143,26 +3143,19 @@ body.dark-theme .sidebar-item.active svg {
     td { padding: 6px 7px; font-size: 11px; }
 }
 
-/* Длинный текст в ячейках — обрезать с многоточием */
-td {
-    max-width: 160px;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-}
+
 
 /* Ячейки с small — компактный текст */
 td small {
-    display: block;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    max-width: 120px;
+    display: inline-block;
+    white-space: normal;
+    word-wrap: break-word;
+    max-width: 200px;
 }
 
 @media (max-width: 900px) {
-    td small { max-width: 80px; }
-    td { max-width: 130px; }
+    td small { max-width: 200px; }
+    td { max-width: 250px; }
 }
 
 /* Ячейки с кнопками/бейджами — не обрезать */
@@ -3176,6 +3169,83 @@ td:last-child {
 td .badge,
 td .btn {
     white-space: nowrap;
+}
+
+/* ========== ТАБЛИЦЫ - ПОЛНЫЙ ТЕКСТ БЕЗ ОБРЕЗАНИЯ ========== */
+.table-container {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+}
+
+td {
+    white-space: normal !important;
+    word-break: break-word !important;
+    overflow: visible !important;
+    text-overflow: clip !important;
+    max-width: none !important;
+    min-width: auto !important;
+}
+
+td small {
+    white-space: normal !important;
+    word-break: break-word !important;
+    display: inline-block !important;
+    max-width: none !important;
+}
+
+/* Для всех экранов */
+@media (max-width: 1200px) {
+    td, td small {
+        white-space: normal !important;
+        word-break: break-word !important;
+        max-width: none !important;
+    }
+}
+
+/* Ячейки с бейджами/кнопками - без переноса */
+td .badge,
+td .btn {
+    white-space: nowrap !important;
+}
+
+/* ========== УЛУЧШЕННЫЙ ВИД ТАБЛИЦ ========== */
+.table-container {
+    overflow-x: auto;
+    border-radius: 16px;
+    width: 100%;
+}
+
+.table-container table {
+    width: 100%;
+    min-width: 100%;
+    border-collapse: collapse;
+}
+
+.table-container th,
+.table-container td {
+    white-space: nowrap;
+    padding: 12px 16px;
+}
+
+/* Для маленьких экранов - горизонтальная прокрутка вместо обрезания */
+@media (max-width: 768px) {
+    .table-container {
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+    .table-container table {
+        min-width: 700px;
+        width: max-content;
+    }
+}
+
+/* Чтобы таблица выглядела аккуратно - чередование строк */
+.table-container tbody tr:nth-child(even) {
+    background-color: rgba(0, 0, 0, 0.02);
+}
+
+body.dark-theme .table-container tbody tr:nth-child(even) {
+    background-color: rgba(255, 255, 255, 0.03);
 }
 
 
@@ -3495,12 +3565,13 @@ td .btn {
                      <label data-i18n="password_label">Password</label>
                      <div class="password-wrapper">
                      <input type="password" id="reg-password" placeholder="min. 8 characters">
-                  <button type="button" class="toggle-password eye-closed" data-password-id="reg-password"></button>
+                  <button type="button" class="toggle-password eye-closed" data-action="togglePassword" data-target="reg-password"></button>
                      </div>
                 </div>
                 <div class="form-group">
                     <label data-i18n="dob_label">Date of Birth</label>
                     <input type="date" id="reg-dob">
+                    <small style="color: var(--text-muted); font-size: 11px; display: block; margin-top: 4px;">You must be at least 18 years old</small>
                 </div>
                 <div class="form-group">
                     <label data-i18n="country_label">Country</label>
@@ -4996,7 +5067,6 @@ resetUserPassword(email) {
 },
 
 // Единый делегированный обработчик кликов — перехватывает всё в фазе capture
-// чтобы гарантированно сработать до всплытия
 _delegatedClick(e) {
     const target = e.target;
 
@@ -5018,13 +5088,11 @@ _delegatedClick(e) {
         return;
     }
 
-    // 3. Кнопки с data-action — но не те, что уже обрабатывает глобальный handler ниже
-    // (глобальный handler в конце файла обрабатывает их в фазе bubble — оставляем как есть)
+    // 3. Кнопки с data-action
     const actionEl = target.closest('[data-action]');
     if (actionEl) {
         const action = actionEl.dataset.action;
 
-        // toggleSidebar / toggleAdminSidebar — обрабатываем здесь
         if (action === 'toggleSidebar') { this.toggleSidebar(); return; }
         if (action === 'toggleAdminSidebar') { this.toggleAdminSidebar(); return; }
         if (action === 'closeSidebar') { this.closeSidebar(); return; }
@@ -5032,7 +5100,21 @@ _delegatedClick(e) {
         if (action === 'toggleTheme') { this.toggleTheme(); return; }
         if (action === 'logout') { this.handleLogout(); return; }
         if (action === 'setLanguage') { this.setLanguage(actionEl.dataset.lang); return; }
-        if (action === 'togglePassword') { this.handleTogglePassword(e); return; }
+        if (action === 'togglePassword') { 
+            e.preventDefault();
+            e.stopPropagation();
+            const targetId = actionEl.getAttribute('data-target');
+            if (targetId) {
+                this.togglePassword(targetId, actionEl);
+            } else {
+                const wrapper = actionEl.closest('.password-wrapper');
+                const input = wrapper ? wrapper.querySelector('input') : null;
+                if (input) {
+                    this.togglePassword(input.id, actionEl);
+                }
+            }
+            return;
+        }
     }
 },
 
@@ -5084,10 +5166,8 @@ handleTogglePassword(e) {
     const targetId = btn.getAttribute('data-target');
     
     if (targetId) {
-        // Если есть атрибут data-target (используется в вашем HTML)
         this.togglePassword(targetId, btn);
     } else {
-        // Альтернативный способ: ищем ближайший input
         const wrapper = btn.closest('.password-wrapper');
         const input = wrapper ? wrapper.querySelector('input') : null;
         if (input) {
@@ -5558,6 +5638,12 @@ closeEditModal() {
                     this.showRegisterError('Password must be at least 8 characters');
                     return;
                 }
+                // === НОВАЯ ПРОВЕРКА ВОЗРАСТА ===
+                if (!this.isAgeValid(dob)) {
+                    this.showRegisterError('You must be at least 18 years old to open an account');
+                    return;
+                }
+                // ===============================
                 if (this.users[email]) {
                     this.showRegisterError('Email already registered');
                     return;
@@ -5604,6 +5690,19 @@ closeEditModal() {
                 errorDiv.textContent = msg;
                 errorDiv.style.display = 'block';
             }
+        },
+
+        // ========== ПРОВЕРКА ВОЗРАСТА (18+) ==========
+        isAgeValid(dateOfBirth) {
+            if (!dateOfBirth) return false;
+            const birthDate = new Date(dateOfBirth);
+            const today = new Date();
+            let age = today.getFullYear() - birthDate.getFullYear();
+            const monthDiff = today.getMonth() - birthDate.getMonth();
+            if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birthDate.getDate())) {
+                age--;
+            }
+            return age >= 18;
         },
 
         hideRegisterError() {
@@ -6640,7 +6739,7 @@ initCardFlips() {
                     <label>Current Password</label>
                     <div class="password-wrapper">
                         <input type="password" id="settings-current-password" placeholder="Enter current password">
-                        <button type="button" class="toggle-password eye-closed" onclick="app.togglePassword('settings-current-password', this)"></button>
+                        <button type="button" class="toggle-password eye-closed" data-action="togglePassword" data-target="settings-current-password"></button>
                     </div>
                 </div>
                 
@@ -6648,7 +6747,7 @@ initCardFlips() {
                     <label>New Password</label>
                     <div class="password-wrapper">
                         <input type="password" id="settings-new-password" placeholder="Min. 8 characters" onkeyup="app.checkSettingsPasswordStrength()">
-                        <button type="button" class="toggle-password eye-closed" onclick="app.togglePassword('settings-new-password', this)"></button>
+                        <button type="button" class="toggle-password eye-closed" data-action="togglePassword" data-target="settings-new-password"></button>
                     </div>
                     <div class="password-strength"><div class="password-strength-bar" id="settings-strength-bar"></div></div>
                 </div>
@@ -6657,7 +6756,7 @@ initCardFlips() {
                     <label>Confirm New Password</label>
                     <div class="password-wrapper">
                         <input type="password" id="settings-confirm-password" placeholder="Confirm new password">
-                        <button type="button" class="toggle-password eye-closed" onclick="app.togglePassword('settings-confirm-password', this)"></button>
+                        <button type="button" class="toggle-password eye-closed" data-action="togglePassword" data-target="settings-confirm-password"></button>
                     </div>
                 </div>
                 
@@ -7585,14 +7684,7 @@ document.addEventListener("click", (e) => {
 
     switch(action) {
 
-        case "togglePassword":
-
-            app.togglePassword(
-                button.dataset.target,
-                button
-            );
-
-            break;
+        
 
         case "openFile":
 
