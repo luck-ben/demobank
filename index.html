@@ -58,80 +58,35 @@ body.dark-theme {
     --accent-hover: #5577e8;
 }
 
-/* ДОПОЛНИТЕЛЬНЫЕ СТИЛИ ДЛЯ АНИМАЦИИ КАРТ */
-.card-animated-bg .square {
-    position: absolute;
-    background: rgba(255, 255, 255, 0.12);
-    backdrop-filter: blur(3px);
-    border-radius: 16px;
-    animation: floatSquare 12s infinite ease-in-out;
-    pointer-events: none;
-    z-index: 1;
-}
-
-@keyframes floatSquare {
-    0% {
-        transform: translateY(0px) rotate(0deg);
-        opacity: 0.15;
-    }
-    50% {
-        transform: translateY(-25px) rotate(8deg);
-        opacity: 0.5;
-    }
-    100% {
-        transform: translateY(0px) rotate(0deg);
-        opacity: 0.15;
-    }
-}
-
-/* Дополнительный glow для карт */
-.glow-card {
-    position: absolute;
-    width: 180px;
-    height: 180px;
-    background: radial-gradient(circle, rgba(59,130,246,0.3), transparent);
-    border-radius: 50%;
-    top: -50px;
-    right: -50px;
-    animation: pulseGlow 7s infinite;
-    pointer-events: none;
-    z-index: 0;
-}
-
-@keyframes pulseGlow {
-    0% {
-        opacity: 0.2;
-        transform: scale(0.9);
-    }
-    50% {
-        opacity: 0.6;
-        transform: scale(1.1);
-    }
-    100% {
-        opacity: 0.2;
-        transform: scale(0.9);
-    }
-}
+/* Анимации карт определены ниже в основном блоке */
 
        .theme-toggle-btn {
-        background: none;
-        border: 1px solid var(--border-color);
-        border-radius: 50%;
-        width: 36px;
-        height: 36px;
-        font-size: 18px;
-        cursor: pointer;
-        transition: all 0.2s;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        background: var(--bg-secondary);
-        color: var(--text-primary);
-       }
-       .theme-toggle-btn:hover {
-        background: var(--hover-bg);
-        transform: scale(1.05);
-       }
+            background: none;
+            border: 1px solid var(--border-color);
+            border-radius: 40px;
+            width: 36px;
+            height: 36px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--bg-secondary);
+            color: var(--text-primary);
+            font-size: 0;
+            position: relative;
+            overflow: hidden;
+        }
+        .theme-toggle-btn:hover {
+            background: var(--accent);
+            border-color: var(--accent);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(79,114,232,0.25);
+        }
+
+        .theme-toggle-btn:active {
+            transform: translateY(0);
+        }
 
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -150,7 +105,7 @@ body.dark-theme {
             height: 62px;
             position: sticky;
             top: 0;
-            z-index: 200;
+            z-index: 150;
             box-shadow: 0 1px 3px rgba(0,0,0,0.1);
         }
 
@@ -338,7 +293,7 @@ body.dark-theme {
             display: block;
             font-size: 12px;
             font-weight: 500;
-            color: #374151;
+            color: var(--text-secondary);
             margin-bottom: 5px;
         }
 
@@ -584,13 +539,14 @@ body.dark-theme {
             background: var(--bg-secondary);
             border: 1px solid var(--border-color);
             border-radius: 16px;
-            overflow: hidden;
             overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
         }
 
         table {
             width: 100%;
             border-collapse: collapse;
+            min-width: 0; /* не форсировать min-width — управляем через media query */
         }
 
         th {
@@ -782,43 +738,24 @@ body.dark-theme {
             font-size: 12px;
         }
 
-        @media (max-width: 450px) {
-    .card-number {
-        font-size: 14px;
-        letter-spacing: 1px;
-        white-space: normal;
-        word-break: break-word;
-    }
-    .card-balance {
-        font-size: 20px;
-    }
-    .bank-card {
-        padding: 16px 20px;
-    }
-}
+        /* Карты на мини-телефонах управляются блоком @media (max-width: 400px) */
 
 /* Адаптив для планшетов */
 @media (max-width: 900px) {
     .stats-container {
         grid-template-columns: repeat(2, 1fr);
-        gap: 40px;
-        padding: 50px 30px;
+        gap: 20px;
+        padding: 40px 20px;
+    }
+    .stat-number {
+        font-size: 36px;
+    }
+    .stat-label {
+        font-size: 15px;
     }
 }
 
-/* Адаптив для телефонов */
-@media (max-width: 550px) {
-    .stats-container {
-        grid-template-columns: 1fr;
-        gap: 35px;
-        padding: 40px 25px;
-    }
-    
-    .stats-section {
-        margin: 40px 15px;
-        border-radius: 30px;
-    }
-}
+
 
         @media (min-width: 1000px) {
     .cards-grid {
@@ -836,100 +773,10 @@ body.dark-theme {
             background: #e0e7ff;
             color: #3730a3;
         }
-        .btn-secondary {
-            background: #6c757d;
-            color: white;
-        }
-        .btn-secondary:hover {
-            background: #5c636a;
-        }
         .status-blocked {
             background: #fee2e2;
             color: #991b1b;
         }
-        /* ========== ДОПОЛНИТЕЛЬНЫЕ СТИЛИ ДЛЯ ТЕМНОЙ ТЕМЫ ========== */
-body.dark-theme .hero {
-    background: linear-gradient(135deg, #0a0f1a 0%, #0f2b5c 70%, #1e3a8a 100%);
-}
-
-body.dark-theme .alert-info {
-    background: #1e3a5f;
-    color: #bae6fd;
-    border-color: #1e4a6f;
-}
-
-body.dark-theme .alert-success {
-    background: #064e3b;
-    color: #a7f3d0;
-    border-color: #065f46;
-}
-
-body.dark-theme .alert-error {
-    background: #7f1d1d;
-    color: #fecaca;
-    border-color: #991b1b;
-}
-
-body.dark-theme .alert-warning {
-    background: #78350f;
-    color: #fed7aa;
-    border-color: #9a3412;
-}
-
-body.dark-theme .badge-active {
-    background: #064e3b;
-    color: #a7f3d0;
-}
-
-body.dark-theme .badge-pending {
-    background: #78350f;
-    color: #fed7aa;
-}
-
-body.dark-theme .badge-verified {
-    background: #064e3b;
-    color: #a7f3d0;
-}
-
-body.dark-theme .badge-blocked {
-    background: #7f1d1d;
-    color: #fecaca;
-}
-
-body.dark-theme .badge-admin {
-    background: #1e3a5f;
-    color: #a5b4fc;
-}
-
-body.dark-theme .text-success {
-    color: #4ade80;
-}
-
-body.dark-theme .text-danger {
-    color: #f87171;
-}
-
-body.dark-theme footer {
-    background: #0a0a0a;
-}
-
-body.dark-theme .progress-steps .step-number {
-    background: #2c2c2c;
-    color: #9ca3af;
-}
-
-body.dark-theme .step-line {
-    background: #2c2c2c;
-}
-
-body.dark-theme .file-preview {
-    background: #2a2a2a;
-}
-
-body.dark-theme .modal-header,
-body.dark-theme .modal-footer {
-    border-color: var(--border-color);
-}
 
 /* ========== МЯГКИЕ СТИЛИ ДЛЯ ТЕМНОЙ ТЕМЫ ========== */
 body.dark-theme {
@@ -1303,21 +1150,6 @@ body.dark-theme .bank-card {
     opacity: 1;
 }
 
-@media (max-width: 550px) {
-    .card-number {
-        font-size: 14px;
-        letter-spacing: 1px;
-    }
-    .card-number.revealed {
-        font-size: 13px;
-        letter-spacing: 0.5px;
-    }
-    .card-number::after {
-        font-size: 8px;
-        bottom: -22px;
-        white-space: nowrap;
-    }
-}
 
 
 .card-details {
@@ -1428,11 +1260,7 @@ body.dark-theme .toggle-password:hover {
     margin-bottom: 20px;
 }
 
-@media (max-width: 768px) {
-    .hero-content h1 {
-        font-size: 32px;
-    }
-}
+/* hero-content h1 на мобиле — управляется основным media query блоком */
 
 /* Feature карточки с изображениями */
 .feature-card {
@@ -1612,18 +1440,7 @@ body.dark-theme .toggle-password:hover {
     letter-spacing: 0.5px;
 }
 
-/* Маленькие экраны - меньшие цифры */
-@media (max-width: 550px) {
-    .stat-number {
-        font-size: 36px;
-    }
-    .stat-label {
-        font-size: 14px;
-    }
-    .stat-item {
-        padding: 20px 15px;
-    }
-}
+
 /* ========== СТИЛИ ДЛЯ ПОДДЕРЖКИ ========== */
 
 /* Плавающая кнопка чата */
@@ -1877,21 +1694,7 @@ body.dark-theme .toggle-password:hover {
     color: var(--text-primary);
 }
 
-@media (max-width: 550px) {
-    .chat-modal {
-        width: calc(100% - 40px);
-        right: 20px;
-        left: 20px;
-        height: 450px;
-    }
-    .chat-button {
-        bottom: 20px;
-        right: 20px;
-        width: 50px;
-        height: 50px;
-        font-size: 24px;
-    }
-}
+/* chat-modal на мобиле — управляется основным media query блоком */
 
 /* Для кнопки показа пароля в регистрации */
 .toggle-password.eye-open,
@@ -1980,6 +1783,33 @@ body.dark-theme .toggle-password:hover {
     font-size: 13px;
     transition: background 0.2s;
 }
+
+/* ========== АДАПТИВ ВКЛАДОК ========== */
+.dashboard-tab {
+    display: none;
+    width: 100%;
+    animation: fadeIn 0.2s ease;
+}
+
+.dashboard-tab.active-tab {
+    display: block !important;
+}
+
+.admin-tab {
+    display: none;
+    width: 100%;
+}
+
+.admin-tab.active-tab {
+    display: block !important;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(8px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Мобильное меню — стили вынесены в основной media query блок ниже */
 
 .btn-new-ticket:hover {
     background: #1648c0;
@@ -2252,6 +2082,87 @@ body.dark-theme .toggle-password:hover {
         }
     }
 
+    @media (max-width: 550px) {
+    .hero { padding: 40px 1rem 30px !important; min-height: auto; }
+    .hero-content { padding: 40px 12px; }
+    .hero-content h1 { font-size: 24px !important; line-height: 1.3; }
+    .hero p { font-size: 14px !important; padding: 0 8px; }
+    
+    .stats-container { grid-template-columns: 1fr; gap: 20px; padding: 30px 20px; }
+    .stat-item { padding: 16px 12px; }
+    .stat-number { font-size: 32px; }
+    .stat-label { font-size: 13px; }
+    
+    .steps-container { grid-template-columns: 1fr; gap: 16px; }
+    .step-item { padding: 20px 15px; }
+    .step-icon { font-size: 36px; }
+    .step-item h3 { font-size: 18px; }
+    .step-item p { font-size: 13px; }
+    
+    .features-grid { grid-template-columns: 1fr !important; gap: 24px; }
+    .feature-card { margin: 0 8px; }
+    .feature-image { height: 160px; }
+    .feature-content { padding: 16px; }
+    .feature-content h3 { font-size: 18px; }
+    .feature-content p { font-size: 13px; }
+    
+    .auth-box { padding: 20px; margin: 0 12px; }
+    .auth-box h2 { font-size: 22px; }
+    .auth-box .sub { font-size: 12px; }
+    
+    .progress-steps { margin-bottom: 20px; }
+    .step-label { font-size: 9px; }
+    .step-number { width: 26px; height: 26px; font-size: 12px; }
+    
+    .form-group input, 
+    .form-group select, 
+    .form-group textarea { font-size: 14px !important; padding: 8px 10px; }
+    
+    .btn { padding: 8px 14px; font-size: 13px; min-height: 40px; }
+    
+    .bank-card { padding: 14px 16px; min-width: auto; }
+    .card-number { font-size: 12px; letter-spacing: 0.5px; word-break: break-all; }
+    .card-balance { font-size: 18px; }
+    .card-details { font-size: 9px; }
+    
+    .metrics { grid-template-columns: 1fr !important; gap: 12px; }
+    .metric-card { padding: 14px; }
+    .metric-card .value { font-size: 20px; }
+    .metric-card .label { font-size: 11px; }
+    
+    .table-container { border-radius: 12px; }
+    th, td { padding: 8px 10px; font-size: 11px; }
+    td small { max-width: 70px; display: block; overflow: hidden; text-overflow: ellipsis; }
+    
+    .sidebar-item { padding: 10px 14px; font-size: 13px; }
+    .sidebar-item svg { width: 18px; height: 18px; }
+    
+    .main-content { padding: 12px !important; }
+    
+    .currency-converter-compact { padding: 12px 14px; }
+    .converter-title { font-size: 13px; }
+    .conv-amount-wrapper input { padding: 8px 10px; font-size: 14px; }
+    .conv-select-wrapper select { padding: 8px 6px; font-size: 12px; }
+    .result-amount { font-size: 16px; }
+    .result-rate { font-size: 10px; }
+    .rate-chip { padding: 3px 10px; font-size: 10px; }
+    
+    .tickets-header h3 { font-size: 16px; }
+    .btn-new-ticket { padding: 6px 14px; font-size: 12px; }
+    .ticket-item-compact { padding: 10px 12px; }
+    .ticket-subject { font-size: 13px; }
+    .ticket-message-preview { font-size: 11px; }
+    
+    .support-contact-compact { padding: 6px 12px; font-size: 11px; }
+    .support-contact-compact .contact-icon svg { width: 16px; height: 16px; }
+    .support-contact-compact .contact-link { font-size: 10px; display: none; }
+    
+    .chat-button { width: 48px; height: 48px; bottom: 16px; right: 16px; }
+    .chat-modal { width: calc(100% - 20px) !important; left: 10px !important; right: 10px !important; height: 70vh !important; bottom: 70px !important; top: auto !important; }
+    
+    footer { padding: 16px 12px !important; font-size: 11px; }
+}
+
     .currency-converter-compact {
         background: var(--bg-secondary);
         border-radius: 16px;
@@ -2293,10 +2204,6 @@ body.dark-theme .toggle-password:hover {
         background: #10b981;
         border-radius: 50%;
         animation: pulseGreen 1.5s infinite;
-    }
-    @keyframes pulseGreen {
-        0% { opacity: 0.4; transform: scale(0.8); }
-        100% { opacity: 1; transform: scale(1.2); }
     }
     .converter-row {
         display: flex;
@@ -2387,10 +2294,7 @@ body.dark-theme .toggle-password:hover {
         background: #4f72e820;
         border-color: var(--accent);
     }
-    @media (max-width: 550px) {
-        .converter-row { flex-direction: column; align-items: stretch; }
-        .conv-swap-btn { align-self: center; transform: rotate(90deg); width: 44px; }
-    }
+    
 
     /* Смена пароля в настройках */
 .password-requirements {
@@ -2470,10 +2374,11 @@ body.dark-theme .toggle-password:hover {
             position: fixed;
             inset: 0;
             background: rgba(0,0,0,0.45);
-            z-index: 99;
+            z-index: 160;
         }
         .sidebar-overlay.open { display: block; }
 
+        /* ========== MOBILE ≤768px ========== */
         @media (max-width: 768px) {
             .hamburger-btn { display: flex; align-items: center; justify-content: center; }
             .lang-selector { display: none !important; }
@@ -2495,7 +2400,7 @@ body.dark-theme .toggle-password:hover {
                 left: -280px !important;
                 width: 260px !important;
                 height: 100vh;
-                z-index: 200;
+                z-index: 300;
                 transition: left 0.28s cubic-bezier(0.4,0,0.2,1);
                 overflow-y: auto;
                 box-shadow: none;
@@ -2518,25 +2423,32 @@ body.dark-theme .toggle-password:hover {
             .features-grid, .features { grid-template-columns: 1fr !important; }
 
             .table-container { overflow-x: auto; -webkit-overflow-scrolling: touch; }
-            table { min-width: 480px; }
+            /* min-width таблиц управляется новыми адаптивными стилями */
 
             .form-group input, .form-group select, .form-group textarea { font-size: 16px !important; }
 
             .btn { min-height: 42px; }
 
+            /* Шаг 9: Модалки — bottom sheet с учётом клавиатуры */
             .modal {
                 width: 96vw !important;
                 max-width: 96vw !important;
-                max-height: 88vh;
+                max-height: calc(100vh - 56px - env(safe-area-inset-bottom, 0px));
                 overflow-y: auto;
                 border-radius: 20px 20px 0 0 !important;
                 margin: 0 auto;
             }
-            .modal-overlay { align-items: flex-end !important; padding: 0 !important; }
+            .modal-overlay {
+                align-items: flex-end !important;
+                padding: 0 !important;
+                padding-bottom: env(safe-area-inset-bottom, 0px);
+            }
 
+            /* Шаг 7: Чат не перекрывает navbar */
             .chat-modal {
                 width: 100vw !important;
-                height: 100vh !important;
+                top: 56px !important;
+                height: calc(100vh - 56px) !important;
                 bottom: 0 !important;
                 right: 0 !important;
                 border-radius: 0 !important;
@@ -2549,11 +2461,90 @@ body.dark-theme .toggle-password:hover {
             ::-webkit-scrollbar { width: 4px; }
         }
 
+        /* ========== SMALL MOBILE ≤480px ========== */
         @media (max-width: 480px) {
             .hero h1 { font-size: 22px !important; }
             .hero-content h1 { font-size: 22px !important; }
             .main-content { padding: 10px !important; }
             .metrics { grid-template-columns: 1fr 1fr !important; gap: 8px !important; }
+
+            /* Шаг 5: Таблицы на маленьком экране — скрытие колонок управляется адаптивными стилями */
+        }
+
+        /* ========== Шаг 2+3+4+6: MINI PHONES ≤400px (320–400px) ========== */
+        @media (max-width: 400px) {
+            /* Navbar */
+            .navbar {
+                padding: 0 0.6rem;
+                height: 52px;
+            }
+            .navbar .logo { font-size: 15px; }
+            .navbar .nav-buttons .btn { padding: 5px 8px; font-size: 11px; }
+            .navbar .nav-buttons .btn-outline { display: none; }
+
+            /* Hero */
+            .hero-content { padding: 40px 12px; }
+            .hero h1, .hero-content h1 { font-size: 20px !important; line-height: 1.25; }
+            .hero p { font-size: 13px !important; }
+
+            /* Банковские карты */
+            .bank-card {
+                min-width: unset;
+                width: 100%;
+                max-width: 100%;
+                padding: 14px 16px;
+            }
+            .flip-card { max-width: 100%; }
+            .cards-grid .flip-card {
+                flex: 1 1 100%;
+                min-width: unset;
+                max-width: 100%;
+            }
+            .card-number { font-size: 12px; letter-spacing: 0.5px; }
+            .card-balance { font-size: 18px; }
+
+            /* Шаг 6: Метрики в одну колонку */
+            .metrics { grid-template-columns: 1fr !important; gap: 8px !important; }
+            .metric-card .value { font-size: 20px; }
+
+            .main-content { padding: 8px !important; }
+        }
+
+        /* ========== Шаг 12: iPhone safe-area (notch / Dynamic Island) ========== */
+        @supports (padding-bottom: env(safe-area-inset-bottom)) {
+            .chat-button {
+                bottom: calc(20px + env(safe-area-inset-bottom));
+            }
+            footer {
+                padding-bottom: calc(16px + env(safe-area-inset-bottom));
+            }
+        }
+
+        /* ========== Шаг 8: 2K / БОЛЬШИЕ ЭКРАНЫ ≥1920px ========== */
+        @media (min-width: 1920px) {
+            .main-content {
+                max-width: 1400px;
+                margin-left: auto;
+                margin-right: auto;
+            }
+            .hero-content {
+                max-width: 900px;
+                margin: 0 auto;
+            }
+            .stats-container { max-width: 1300px; }
+            .metrics { grid-template-columns: repeat(4, 1fr); }
+            .features-grid { grid-template-columns: repeat(4, 1fr); }
+            .auth-box { max-width: 560px; }
+        }
+
+        @media (min-width: 2400px) {
+            .main-content { max-width: 1700px; }
+            .hero-content h1 { font-size: 72px; }
+            .hero-content p { font-size: 22px; }
+            .stat-number { font-size: 64px; }
+            .stat-label { font-size: 20px; }
+            .metric-card .value { font-size: 32px; }
+            .sidebar { width: 300px; }
         }
 
 
@@ -2899,8 +2890,117 @@ h2 svg, h3 svg {
     .cvv-value {
         font-size: 16px;
     }
+}
 
-    /* Стили для SVG иконок в сайдбаре */
+@media (max-width: 400px) {
+    .navbar { padding: 0 0.8rem; height: 52px; }
+    .navbar .logo { font-size: 16px; }
+    .navbar .nav-buttons .btn { padding: 4px 8px; font-size: 11px; }
+    .navbar .nav-buttons .btn-outline { display: none; }
+    
+    .hero-content h1 { font-size: 20px !important; }
+    .hero p { font-size: 12px !important; }
+    .hero .btn-primary { padding: 10px 20px !important; font-size: 13px !important; }
+    
+    .auth-box { padding: 16px; margin: 0 8px; }
+    .auth-box h2 { font-size: 20px; }
+    
+    .bank-card { padding: 12px 14px; }
+    .card-number { font-size: 11px; white-space: normal; word-break: break-all; letter-spacing: 0.3px; }
+    .card-balance { font-size: 16px; }
+    .card-details { flex-direction: column; align-items: flex-start; gap: 4px; }
+    .flip-hint { font-size: 8px; bottom: 6px; right: 8px; }
+    
+    .cvv-section { padding: 6px 10px; }
+    .cvv-value { font-size: 14px; }
+    .magnetic-strip { height: 30px; }
+    
+    .main-content { padding: 8px !important; }
+    
+    .metric-card { padding: 12px; }
+    .metric-card .value { font-size: 18px; }
+    
+    th, td { padding: 6px 8px; font-size: 10px; }
+    td:first-child, th:first-child { padding-left: 8px; }
+    td:last-child, th:last-child { padding-right: 8px; }
+    
+    .sidebar { width: 240px !important; }
+    .sidebar-item { padding: 10px 12px; font-size: 12px; }
+    .sidebar-header { padding: 14px; }
+    .user-avatar { width: 40px; height: 40px; font-size: 16px; }
+    .user-name { font-size: 13px; }
+    .user-email { font-size: 10px; }
+    
+    .btn { padding: 6px 12px; font-size: 12px; min-height: 36px; }
+    .btn-sm { padding: 4px 8px; font-size: 10px; }
+    
+    .modal { width: 95vw !important; max-width: 95vw !important; }
+    .modal-header { padding: 14px; }
+    .modal-header h3 { font-size: 16px; }
+    .modal-body { padding: 14px; }
+    .modal-footer { padding: 12px; }
+    
+    .conv-amount-wrapper input { font-size: 13px; padding: 6px 8px; }
+    .conv-select-wrapper select { font-size: 11px; padding: 6px 4px; }
+    .conv-swap-btn { width: 34px; height: 34px; font-size: 14px; }
+    .result-amount { font-size: 14px; }
+    
+    footer p:first-of-type { font-size: 10px; }
+}
+
+@media (max-width: 550px) {
+    div[style*="padding: 80px 20px"] {
+        padding: 40px 16px !important;
+    }
+    div[style*="background: linear-gradient"] {
+        padding: 40px 16px !important;
+    }
+    .steps-container {
+        gap: 16px;
+    }
+}
+
+@media (max-width: 550px) {
+    .cards-grid {
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+    }
+    .cards-grid .flip-card {
+        max-width: 100%;
+        min-width: auto;
+    }
+    .cards-grid .bank-card {
+        max-width: 100%;
+    }
+}
+
+/* Адаптивные таблицы — горизонтальный скролл вместо обрезания */
+.table-container {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    width: 100%;
+}
+
+.table-container table {
+    min-width: 500px;
+    width: max-content;
+}
+
+@media (max-width: 600px) {
+    .table-container table {
+        min-width: 480px;
+    }
+}
+
+/* Для очень маленьких экранов таблица скроллится */
+@media (max-width: 400px) {
+    .table-container table {
+        min-width: 420px;
+    }
+}
+
+/* Стили для SVG иконок в сайдбаре */
 .sidebar-item svg {
     stroke: var(--text-secondary);
     transition: stroke 0.2s ease;
@@ -2961,9 +3061,123 @@ body.dark-theme .sidebar-item.active svg {
     vertical-align: middle;
 }
 
+/* ========== АДАПТИВНЫЕ ТАБЛИЦЫ ========== */
 
-
+/* Базовый контейнер — горизонтальный скролл как запасной вариант */
+.table-container {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    border-radius: 16px;
+    border: 1px solid var(--border-color);
+    background: var(--bg-secondary);
 }
+
+/* На средних экранах (≤900px) — скрываем второстепенные колонки */
+@media (max-width: 900px) {
+
+    /* Transfer Status: скрываем Reference (6-я колонка) */
+    #pending-transfers-list th:nth-child(6),
+    #pending-transfers-list td:nth-child(6) { display: none; }
+
+    /* Admin Transfer Approvals: скрываем Reference (6-я колонка) */
+    #pending-transfers-admin th:nth-child(6),
+    #pending-transfers-admin td:nth-child(6) { display: none; }
+
+    /* Accounts: скрываем IBAN (2-я колонка) */
+    #accounts-list th:nth-child(2),
+    #accounts-list td:nth-child(2) { display: none; }
+
+    /* Documents: скрываем Notes (4-я колонка) */
+    #documents-status th:nth-child(4),
+    #documents-status td:nth-child(4) { display: none; }
+
+    /* KYC Verification: скрываем Submitted (3-я колонка) */
+    #admin-verification th:nth-child(3),
+    #admin-verification td:nth-child(3) { display: none; }
+
+    /* Logs: скрываем User (4-я колонка) */
+    #logs-table th:nth-child(4),
+    #logs-table td:nth-child(4) { display: none; }
+
+    /* Уменьшить padding в ячейках */
+    th { padding: 9px 10px; }
+    td { padding: 9px 10px; font-size: 12px; }
+}
+
+@media (max-width: 700px) {
+
+    /* Transfer Status: скрываем ещё IBAN (3-я колонка) */
+    #pending-transfers-list th:nth-child(3),
+    #pending-transfers-list td:nth-child(3) { display: none; }
+
+    /* Admin Transfer Approvals: скрываем ещё IBAN (4-я колонка) */
+    #pending-transfers-admin th:nth-child(4),
+    #pending-transfers-admin td:nth-child(4) { display: none; }
+
+    /* Users admin: скрываем Role (3-я) и Joined (6-я) */
+    #users-table-wrapper th:nth-child(3),
+    #users-table-wrapper td:nth-child(3),
+    #users-table-wrapper th:nth-child(6),
+    #users-table-wrapper td:nth-child(6) { display: none; }
+
+    /* Logs: скрываем Details (3-я колонка) */
+    #logs-table th:nth-child(3),
+    #logs-table td:nth-child(3) { display: none; }
+
+    th { padding: 7px 8px; font-size: 11px; }
+    td { padding: 7px 8px; font-size: 11px; }
+    .btn-sm { padding: 4px 8px; font-size: 10px; }
+}
+
+@media (max-width: 500px) {
+
+    /* Users admin: скрываем ещё Balance (4-я) */
+    #users-table-wrapper th:nth-child(4),
+    #users-table-wrapper td:nth-child(4) { display: none; }
+
+    /* Admin Transfer Approvals: скрываем Recipient (3-я) */
+    #pending-transfers-admin th:nth-child(3),
+    #pending-transfers-admin td:nth-child(3) { display: none; }
+
+    th { padding: 6px 7px; }
+    td { padding: 6px 7px; font-size: 11px; }
+}
+
+/* Длинный текст в ячейках — обрезать с многоточием */
+td {
+    max-width: 160px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+/* Ячейки с small — компактный текст */
+td small {
+    display: block;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 120px;
+}
+
+@media (max-width: 900px) {
+    td small { max-width: 80px; }
+    td { max-width: 130px; }
+}
+
+/* Ячейки с кнопками/бейджами — не обрезать */
+td:last-child {
+    white-space: normal;
+    overflow: visible;
+    max-width: none;
+}
+
+/* Бейдж внутри ячейки — перенос не нужен */
+td .badge,
+td .btn {
+    white-space: nowrap;
+}
+
 
 </style>
 </head>
@@ -4388,11 +4602,32 @@ generateCardAnimation() {
     }
 },
 
+closeSidebar() {
+    const sidebar = document.querySelector('#page-dashboard .sidebar');
+    const overlay = document.getElementById('sidebar-overlay');
+    if (sidebar) sidebar.classList.remove('open');
+    if (overlay) overlay.classList.remove('open');
+    document.body.style.overflow = '';
+},
+
+closeAdminSidebar() {
+    const sidebar = document.querySelector('#page-admin .sidebar');
+    const overlay = document.getElementById('admin-sidebar-overlay');
+    if (sidebar) sidebar.classList.remove('open');
+    if (overlay) overlay.classList.remove('open');
+    document.body.style.overflow = '';
+},
+
 updateThemeIcon() {
     const themeBtns = document.querySelectorAll('.theme-toggle-btn');
     themeBtns.forEach(btn => {
-        btn.innerHTML = this.theme === 'light' ? '🌙' : '☀️';
-        btn.title = this.theme === 'light' ? 'Dark mode' : 'Light mode';
+        if (this.theme === 'light') {
+            btn.innerHTML = `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>`;
+            btn.title = 'Dark mode';
+        } else {
+            btn.innerHTML = `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>`;
+            btn.title = 'Light mode';
+        }
     });
 },
 
@@ -4751,79 +4986,88 @@ resetUserPassword(email) {
         },
 
         bindEvents() {
-    // Обработчики для кнопок с data-action
-    document.querySelectorAll('[data-action]').forEach(el => {
-        el.removeEventListener('click', this.handleAction);
-        el.addEventListener('click', this.handleAction.bind(this));
-    });
-    
-    // Обработчики для кнопок переключения вкладок
-    document.querySelectorAll('.sidebar-item[data-tab]').forEach(el => {
-        el.removeEventListener('click', this.handleTabSwitch);
-        el.addEventListener('click', this.handleTabSwitch.bind(this));
-    });
-    
-    document.querySelectorAll('.sidebar-item[data-admin-tab]').forEach(el => {
-        el.removeEventListener('click', this.handleAdminTabSwitch);
-        el.addEventListener('click', this.handleAdminTabSwitch.bind(this));
-    });
-
-    // Обработчик для кнопки темы - добавляем явно
-    const themeBtns = document.querySelectorAll('.theme-toggle-btn');
-    themeBtns.forEach(btn => {
-        btn.removeEventListener('click', this.toggleTheme);
-        btn.addEventListener('click', this.toggleTheme.bind(this));
-    });
-    
-    // Обработчики для кнопок языка
-    document.querySelectorAll('.lang-btn').forEach(el => {
-        el.removeEventListener('click', this.handleLangChange);
-        el.addEventListener('click', this.handleLangChange.bind(this));
-    });
-    
-    // Обработчики для кнопок показа пароля
-    document.querySelectorAll('.toggle-password').forEach(el => {
-        el.removeEventListener('click', this.handleTogglePassword);
-        el.addEventListener('click', this.handleTogglePassword.bind(this));
-    });
-    
-    // Обработчик для выхода
-    const logoutBtn = document.querySelector('[data-action="logout"]');
-    if (logoutBtn) {
-        logoutBtn.removeEventListener('click', this.handleLogout);
-        logoutBtn.addEventListener('click', this.handleLogout.bind(this));
+    // Сохраняем bound-функции один раз чтобы removeEventListener работал
+    if (!this._boundHandlers) {
+        this._boundHandlers = {
+            click: this._delegatedClick.bind(this),
+        };
+        document.addEventListener('click', this._boundHandlers.click, true);
     }
-    
-    // Обработчик для конвертера валют (кнопки swap)
-    document.querySelectorAll('.conv-swap-btn').forEach(el => {
-        el.removeEventListener('click', this.handleSwap);
-        el.addEventListener('click', this.handleSwap.bind(this));
-    });
-    
-    document.querySelectorAll('.rate-chip').forEach(el => {
-        el.removeEventListener('click', this.handleRateChip);
-        el.addEventListener('click', this.handleRateChip.bind(this));
-    });
 },
 
-// Обработчик действий
-handleAction(e) {
-    const action = e.currentTarget.getAttribute('data-action');
-    if (action && this[action]) {
-        this[action](e.currentTarget.getAttribute('data-page'));
+// Единый делегированный обработчик кликов — перехватывает всё в фазе capture
+// чтобы гарантированно сработать до всплытия
+_delegatedClick(e) {
+    const target = e.target;
+
+    // 1. Кнопки переключения вкладок пользователя
+    const tabItem = target.closest('.sidebar-item[data-tab]');
+    if (tabItem) {
+        e.stopPropagation();
+        const tab = tabItem.getAttribute('data-tab');
+        if (tab) { this.closeSidebar(); this.switchUserTab(tab); }
+        return;
+    }
+
+    // 2. Кнопки переключения вкладок админа
+    const adminTabItem = target.closest('.sidebar-item[data-admin-tab]');
+    if (adminTabItem) {
+        e.stopPropagation();
+        const tab = adminTabItem.getAttribute('data-admin-tab');
+        if (tab) { this.closeAdminSidebar(); this.switchAdminTab(tab); }
+        return;
+    }
+
+    // 3. Кнопки с data-action — но не те, что уже обрабатывает глобальный handler ниже
+    // (глобальный handler в конце файла обрабатывает их в фазе bubble — оставляем как есть)
+    const actionEl = target.closest('[data-action]');
+    if (actionEl) {
+        const action = actionEl.dataset.action;
+
+        // toggleSidebar / toggleAdminSidebar — обрабатываем здесь
+        if (action === 'toggleSidebar') { this.toggleSidebar(); return; }
+        if (action === 'toggleAdminSidebar') { this.toggleAdminSidebar(); return; }
+        if (action === 'closeSidebar') { this.closeSidebar(); return; }
+        if (action === 'closeAdminSidebar') { this.closeAdminSidebar(); return; }
+        if (action === 'toggleTheme') { this.toggleTheme(); return; }
+        if (action === 'logout') { this.handleLogout(); return; }
+        if (action === 'setLanguage') { this.setLanguage(actionEl.dataset.lang); return; }
+        if (action === 'togglePassword') { this.handleTogglePassword(e); return; }
     }
 },
 
 // Обработчик переключения вкладок пользователя
 handleTabSwitch(e) {
-    const tab = e.currentTarget.getAttribute('data-tab');
-    if (tab) this.switchUserTab(tab);
+    // Важно: останавливаем всплытие, чтобы не было конфликтов
+    if (e) {
+        e.stopPropagation();
+    }
+    
+    // Получаем название вкладки из data-tab
+    let tab = null;
+    if (e && e.currentTarget) {
+        tab = e.currentTarget.getAttribute('data-tab');
+    } else if (this && typeof this === 'string') {
+        // fallback для старых вызовов
+        tab = this;
+    }
+    
+    if (tab) {
+        // Закрываем мобильное меню после клика
+        this.closeSidebar();
+        // Переключаем вкладку
+        this.switchUserTab(tab);
+    }
 },
 
 // Обработчик переключения вкладок админа
 handleAdminTabSwitch(e) {
+    if (e) e.stopPropagation();
     const tab = e.currentTarget.getAttribute('data-admin-tab');
-    if (tab) this.switchAdminTab(tab);
+    if (tab) {
+        this.closeAdminSidebar();
+        this.switchAdminTab(tab);
+    }
 },
 
 // Обработчик смены языка
@@ -6453,24 +6697,35 @@ initCardFlips() {
 },
 
        switchUserTab(tabName) {
+    // Закрываем мобильное меню
     this.closeSidebar();
+    
     // Скрываем все вкладки
-    document.querySelectorAll('#page-dashboard .dashboard-tab').forEach(t => t.style.display = 'none');
+    document.querySelectorAll('#page-dashboard .dashboard-tab').forEach(t => {
+        t.style.display = 'none';
+        t.classList.remove('active-tab');
+    });
     
     // Показываем нужную вкладку
-    const tab = document.getElementById('user-' + tabName);
+    let tab = document.getElementById('user-' + tabName);
+    if (!tab) {
+        tab = document.getElementById(tabName);
+    }
+    
     if (tab) {
         tab.style.display = 'block';
-    } else {
-        // Если вкладка не найдена, пытаемся найти по-другому
-        const altTab = document.getElementById(tabName);
-        if (altTab) altTab.style.display = 'block';
+        tab.classList.add('active-tab');
     }
     
     // Обновляем активный класс в боковом меню
-    document.querySelectorAll('#page-dashboard .sidebar-item').forEach(i => i.classList.remove('active'));
-    const item = document.querySelector('#page-dashboard .sidebar-item[data-tab="' + tabName + '"]');
-    if (item) item.classList.add('active');
+    document.querySelectorAll('#page-dashboard .sidebar-item').forEach(i => {
+        i.classList.remove('active');
+    });
+    
+    const activeItem = document.querySelector('#page-dashboard .sidebar-item[data-tab="' + tabName + '"]');
+    if (activeItem) {
+        activeItem.classList.add('active');
+    }
     
     // Загружаем соответствующие данные
     if (tabName === 'overview') this.loadUserDashboard();
@@ -6725,37 +6980,39 @@ approveDocuments() {
 
       // ========== ПЕРЕКЛЮЧЕНИЕ ВКЛАДОК АДМИНА ==========
     switchAdminTab(tabName) {
-        this.closeAdminSidebar();
-        // Скрываем все админ-вкладки
-        document.querySelectorAll('#page-admin .admin-tab').forEach(t => t.style.display = 'none');
-        
-        // Показываем нужную
-        const tab = document.getElementById('admin-' + tabName);
-        if (tab) tab.style.display = 'block';
-        
-        // Обновляем активный класс
-        document.querySelectorAll('#page-admin .sidebar-item').forEach(i => i.classList.remove('active'));
-        const item = document.querySelector('#page-admin .sidebar-item[data-admin-tab="' + tabName + '"]');
-        if (item) item.classList.add('active');
+    this.closeAdminSidebar();
+    
+    // Скрываем все админ-вкладки
+    document.querySelectorAll('#page-admin .admin-tab').forEach(t => {
+        t.style.display = 'none';
+        t.classList.remove('active-tab');
+    });
+    
+    // Показываем нужную
+    const tab = document.getElementById('admin-' + tabName);
+    if (tab) {
+        tab.style.display = 'block';
+        tab.classList.add('active-tab');
+    }
+    
+    // Обновляем активный класс
+    document.querySelectorAll('#page-admin .sidebar-item').forEach(i => i.classList.remove('active'));
+    const item = document.querySelector('#page-admin .sidebar-item[data-admin-tab="' + tabName + '"]');
+    if (item) item.classList.add('active');
 
-        // Загружаем данные
-        if (tabName === 'dashboard') this.loadAdminDashboard();
-        else if (tabName === 'verification') this.loadVerificationRequests();
-        else if (tabName === 'transferApprovals') {
-            this.loadAdminPendingTransfers();
-            this.populateUserDropdown();
-        }
-        else if (tabName === 'users') this.loadUsersTable();
-        else if (tabName === 'logs') this.loadActivityLogs();
-        else if (tabName === 'tickets') this.loadAdminTickets();
-        
-        this.updateAllTexts();
-    },
-
-        closeDocumentModal() {
-            document.getElementById('document-modal').classList.remove('open');
-            this.pendingReviewEmail = null;
-        },
+    // Загружаем данные
+    if (tabName === 'dashboard') this.loadAdminDashboard();
+    else if (tabName === 'verification') this.loadVerificationRequests();
+    else if (tabName === 'transferApprovals') {
+        this.loadAdminPendingTransfers();
+        this.populateUserDropdown();
+    }
+    else if (tabName === 'users') this.loadUsersTable();
+    else if (tabName === 'logs') this.loadActivityLogs();
+    else if (tabName === 'tickets') this.loadAdminTickets();
+    
+    this.updateAllTexts();
+},
 
         
 
@@ -7413,9 +7670,7 @@ document.addEventListener("click", (e) => {
             break;
 
         case "setLanguage":
-            app.setLanguage(
-                button.dataset.lang
-            );
+            // обрабатывается в _delegatedClick
             break;
 
         case "showPage":
@@ -7425,7 +7680,7 @@ document.addEventListener("click", (e) => {
             break;
 
         case "toggleTheme":
-            app.toggleTheme();
+            // обрабатывается в _delegatedClick
             break;
 
         case "login":
@@ -7464,19 +7719,19 @@ document.addEventListener("click", (e) => {
             break;
 
         case "toggleSidebar":
-            app.toggleSidebar();
+            // обрабатывается в _delegatedClick (capture phase)
             break;
 
         case "toggleAdminSidebar":
-            app.toggleAdminSidebar();
+            // обрабатывается в _delegatedClick (capture phase)
             break;
 
         case "closeSidebar":
-            app.closeSidebar();
+            // обрабатывается в _delegatedClick (capture phase)
             break;
 
         case "closeAdminSidebar":
-            app.closeAdminSidebar();
+            // обрабатывается в _delegatedClick (capture phase)
             break;
 
         case "requestTransfer":
@@ -7524,7 +7779,7 @@ document.addEventListener("click", (e) => {
             break;
 
         case "logout":
-            app.handleLogout();
+            // обрабатывается в _delegatedClick
             break;
     }
 });
