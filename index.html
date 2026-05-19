@@ -39,6 +39,9 @@
     --warning: #d97706;
 }
 
+/* ========== ПОДКЛЮЧЕНИЕ ШРИФТА PLAYFAIR DISPLAY ========== */
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700;800;900&display=swap');
+
 body.dark-theme {
     --bg-primary: #0f172a;
     --bg-secondary: #1a2340;
@@ -110,11 +113,18 @@ body.dark-theme {
         }
 
         .logo {
-            font-size: 20px;
-            font-weight: 700;
+            font-family: 'Playfair Display', serif;
+            font-size: 30px;
+            font-weight: 900;
+            
+            
             cursor: pointer;
             transition: color 0.3s ease;
             color: #0035a8
+            
+        }
+        .logo span:not(svg) {
+            font-family: 'Playfair Display', serif;
         }
         
         .logo span {
@@ -3261,7 +3271,16 @@ body.dark-theme .table-container tbody tr:nth-child(even) {
 <!-- ==================== HOME PAGE ==================== -->
 <div class="page active" id="page-home">
     <div class="navbar">
-        <div class="logo" data-action="showPage" data-page="home"><span style="display:inline-flex;align-items:center;gap:6px;"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" style="vertical-align:middle"><circle cx="12" cy="12" r="10" fill="#4f72e8"/><path d="M12 6v2m0 8v2M8 12h8" stroke="white" stroke-width="2" stroke-linecap="round"/><circle cx="12" cy="12" r="3" fill="white"/></svg>Nord<span style="color:var(--accent)">Bank</span></span></div>
+       <div class="logo" data-action="showPage" data-page="home">
+    <span style="display:inline-flex;align-items:center;gap:6px; font-family: 'Playfair Display', serif; font-weight: 700;">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" style="vertical-align:middle">
+            <circle cx="12" cy="12" r="10" fill="#4f72e8"/>
+            <path d="M12 6v2m0 8v2M8 12h8" stroke="white" stroke-width="2" stroke-linecap="round"/>
+            <circle cx="12" cy="12" r="3" fill="white"/>
+        </svg>
+        Nord<span style="color:var(--accent)">Bank</span>
+    </span>
+</div>
         <div class="nav-buttons">
             <div class="lang-selector">
                 <button class="lang-btn" data-action="setLanguage" data-lang="en">EN</button>
